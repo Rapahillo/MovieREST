@@ -9,6 +9,11 @@ namespace MovieREST
     {
         public static void Register(HttpConfiguration config)
         {
+
+
+            // New code
+            config.EnableCors();
+
             // Web API configuration and services
 
             // Web API routes
@@ -18,7 +23,14 @@ namespace MovieREST
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
-            );
+                );
+
+            config.Routes.MapHttpRoute(
+                name: "NimelläApi",
+                routeTemplate: "api/{controller}/name/{hakuehto}",
+                defaults: new { hakuehto = RouteParameter.Optional }
+                );
+
         }
     }
 }
