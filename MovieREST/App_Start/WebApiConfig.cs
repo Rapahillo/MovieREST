@@ -21,14 +21,18 @@ namespace MovieREST
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
+                routeTemplate: "api/{controller}",
+                defaults: new { id = RouteParameter.Optional }
+                );
+            config.Routes.MapHttpRoute(
+                name: "WithIdApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
                 );
-
             config.Routes.MapHttpRoute(
-                name: "NimelläApi",
-                routeTemplate: "api/{controller}/name/{hakuehto}",
-                defaults: new { hakuehto = RouteParameter.Optional }
+                name: "WithTitleApi",
+                routeTemplate: "api/{controller}/title/{title}",
+                defaults: new { title = RouteParameter.Optional }
                 );
 
         }

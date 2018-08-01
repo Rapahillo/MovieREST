@@ -18,14 +18,14 @@ namespace MovieREST.Controllers
 
             return View();
         }
-        public ActionResult Leffahaku(int? id = null, string name = "")
+        public ActionResult Leffahaku(int? id = null, string title = "")
         {
             string path = "";
             if (id == null)
             {
-                path = $"http://localhost:31159//api/movieinfoes/name/{name}";
+                path = $"http://localhost:31159//api/movieinfoes/title/{title}";
             }
-            else if (name == "")
+            else if (title == "")
             {
                 path = $"http://localhost:31159//api/movieinfoes/{id}";
             }
@@ -38,7 +38,7 @@ namespace MovieREST.Controllers
                 json = response.Content.ReadAsStringAsync().Result;
             }
 
-            if (name == "")
+            if (title == "")
             {
                 MovieInfo movie;
                 movie = JsonConvert.DeserializeObject<MovieInfo>(json);

@@ -7,13 +7,16 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using MovieREST.Models;
 
 namespace MovieREST.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class MovieInfoesController : ApiController
     {
+
         private MovieDBEntities db = new MovieDBEntities();
 
         // GET: api/MovieInfoes
@@ -21,21 +24,6 @@ namespace MovieREST.Controllers
         {
             return db.MovieInfo.Distinct();
         }
-
-        //[ResponseType(typeof(MovieInfo))]
-        //public IHttpActionResult GetAllMovies()
-        //{
-        //    List<MovieInfo> moviesList = new List<MovieInfo>();
-        //    var movies = from mov in db.MovieInfo
-        //                 select mov;
-
-        //    foreach (var item in movies)
-        //    {
-        //        moviesList.Add(item);
-        //    }
-
-        //    return Ok(moviesList.Distinct());
-        //}
 
         // GET: api/MovieInfoes/5
         [ResponseType(typeof(MovieInfo))]
@@ -49,6 +37,16 @@ namespace MovieREST.Controllers
 
             return Ok(movieInfo);
         }
+        [ResponseType(typeof(MovieInfo))]
+        public IHttpActionResult GetMovieInfo(string title)
+        {
+            var a = from t in db.MovieInfo
+                    where t.Title == title
+                    select t;
+
+            return Ok(a);
+        }
+        
 
         // PUT: api/MovieInfoes/5
         [ResponseType(typeof(void))]
@@ -87,8 +85,11 @@ namespace MovieREST.Controllers
 
         // POST: api/MovieInfoes
         [ResponseType(typeof(MovieInfo))]
-        public IHttpActionResult PostMovieInfo(MovieInfo movieInfo)
+        public IHttpActionResult PostMovieInfo(string JSONmovieInfo)
         {
+
+            MovieInfo movieInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<MovieInfo>(JSONmovieInfo);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
