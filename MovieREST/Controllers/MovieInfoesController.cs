@@ -44,9 +44,8 @@ namespace MovieREST.Controllers
                     where t.Title == title
                     select t;
 
-            return Ok(a);
+            return Ok(a.ToList());
         }
-        
 
         // PUT: api/MovieInfoes/5
         [ResponseType(typeof(void))]
@@ -85,10 +84,10 @@ namespace MovieREST.Controllers
 
         // POST: api/MovieInfoes
         [ResponseType(typeof(MovieInfo))]
-        public IHttpActionResult PostMovieInfo(string JSONmovieInfo)
+        public IHttpActionResult PostMovieInfo(MovieInfo movieInfo)
         {
 
-            MovieInfo movieInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<MovieInfo>(JSONmovieInfo);
+            //MovieInfo movieInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<MovieInfo>(JSONmovieInfo);
 
             if (!ModelState.IsValid)
             {
@@ -98,7 +97,8 @@ namespace MovieREST.Controllers
             db.MovieInfo.Add(movieInfo);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = movieInfo.ID }, movieInfo);
+            //return CreatedAtRoute("DefaultApi", new { id = movieInfo.ID }, movieInfo);
+            return Ok(movieInfo);
         }
 
         // DELETE: api/MovieInfoes/5
