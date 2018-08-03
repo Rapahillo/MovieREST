@@ -20,9 +20,11 @@ namespace MovieREST.Controllers
         private MovieDBEntities db = new MovieDBEntities();
 
         // GET: api/MovieInfoes
-        public IQueryable<MovieInfo> GetMovieInfo()
+        public List<MovieInfo> GetMovieInfo()
         {
-            return db.MovieInfo.Distinct();
+            var distinct = db.MovieInfo.GroupBy(x => x.Title).Select(g => g.FirstOrDefault()).ToList();
+
+            return distinct;
         }
 
         // GET: api/MovieInfoes/5
@@ -41,11 +43,15 @@ namespace MovieREST.Controllers
         public IHttpActionResult GetMovieInfo(string title)
         {
             var a = from t in db.MovieInfo
-                    where t.Title == title
+                    where t.Title.Contains(title)
                     select t;
 
-            return Ok(a.ToList());
+            var distinct = a.GroupBy(x => x.Title).Select(g => g.FirstOrDefault()).ToList();
+
+            return Ok(distinct);
+            //return Ok(a.ToList());
         }
+       
 
         // PUT: api/MovieInfoes/5
         [ResponseType(typeof(void))]
