@@ -231,6 +231,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="JaahulisJaa.txt" />
     <Content Include="Models\MovieDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MovieDB.Context.cs</LastGenOutput>
